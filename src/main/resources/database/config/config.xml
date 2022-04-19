@@ -6,5 +6,7 @@
   <configuration>
   	<typeAliases>
   		<typeAlias type="com.ksnx3684.boot3.board.BoardVO" alias="BoardVO"/>
+  		<typeAlias type="com.ksnx3684.boot3.board.BoardFilesVO" alias="BoardFilesVO"/>
+  		<typeAlias type="com.ksnx3684.boot3.util.Pager" alias="Pager"/>
   	</typeAliases>
   </configuration>

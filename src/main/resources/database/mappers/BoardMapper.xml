@@ -3,14 +3,63 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ksnx3684.boot3.board.BoardMapper">
-	<select id="getDetail" parameterType="BoardVO" resultType="BoardVO">
-		SELECT * FROM BOARD WHERE NUM = #{num}
+	<select id="getDetail" parameterType="BoardVO" resultMap="getDetailResult">
+		SELECT * FROM BOARD B
+		LEFT JOIN
+		BOARDFILES BF
+		USING(NUM)
+		WHERE NUM = #{num}
 	</select>
-	<select id="getList" resultType="BoardVO">
-		SELECT * FROM BOARD ORDER BY NUM DESC
+	<resultMap type="BoardVO" id="getDetailResult">
+		<id column="num" property="num"/>
+		<result column="title" property="title"/>
+		<result column="writer" property="writer"/>
+		<result column="contents" property="contents"/>
+		<result column="hit" property="hit"/>
+		<result column="regDate" property="regDate"/>
+		<result column="ref" property="ref"/>
+		<result column="step" property="step"/>
+		<result column="depth" property="depth"/>
+		<result column="category" property="category"/>
+		<collection property="boardFilesVOs" javaType="java.util.List" ofType="BoardFilesVO">
+			<id column="fileNum" property="fileNum"/>
+			<result column="fileName" property="fileName"/>
+			<result column="oriName" property="oriName"/>
+		</collection>
+	</resultMap>
+		
+	<select id="getTotalCount" parameterType="Pager" resultType="java.lang.Long">
+		SELECT COUNT(NUM) FROM BOARD WHERE
+		<choose>
+			<when test="kind=='title'">
+				TITLE
+			</when>
+			<when test="kind=='contents'">
+				CONTENTS
+			</when>
+			<otherwise>
+				WRITER
+			</otherwise>
+		</choose>
+		LIKE CONCAT('%', #{search},'%')
 	</select>
-	<insert id="setAdd" parameterType="BoardVO">
-		INSERT INTO BOARD VALUES (NULL, 'TEST', 'TEST', 'TEST', 0, NOW(), 0, 0, 0, 1)
+	<select id="getList" parameterType="Pager" resultType="BoardVO">
+		SELECT * FROM BOARD WHERE NUM > 0 AND
+		<choose>
+			<when test="kind=='title'">
+				TITLE
+			</when>
+			<when test="kind=='contents'">
+				CONTENTS
+			</when>
+			<otherwise>
+				WRITER
+			</otherwise>
+		</choose>
+		LIKE CONCAT('%', #{search},'%') ORDER BY NUM DESC LIMIT #{startRow}, #{perPage}
+	</select>
+	<insert id="setAdd" parameterType="BoardVO" useGeneratedKeys="true" keyProperty="num">
+		INSERT INTO BOARD VALUES (#{num}, #{title}, #{writer}, #{contents}, 0, NOW(), 0, 0, 0, 1)
 	</insert>
 	<update id="setUpdate" parameterType="BoardVO">
 		UPDATE BOARD SET TITLE = #{title}, CONTENTS = #{contents} WHERE NUM = #{num}
@@ -18,4 +67,15 @@
 	<delete id="setDelete" parameterType="BoardVO">
 		DELETE FROM BOARD WHERE NUM = #{num}
 	</delete>
+	
+	
+	<insert id="setFileAdd" parameterType="BoardFilesVO">
+		INSERT INTO BOARDFILES VALUES (NULL, #{num}, #{fileName}, #{oriName})
+	</insert>
+	<delete id="setFileDelete" parameterType="BoardFilesVO">
+		DELETE FROM BOARDFILES WHERE NUM = #{num}
+	</delete>
+	
+	
+	
 </mapper>

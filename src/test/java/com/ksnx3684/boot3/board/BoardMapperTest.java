@@ -8,13 +8,15 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.ksnx3684.boot3.util.Pager;
+
 @SpringBootTest
 class BoardMapperTest {
 
 	@Autowired
 	private BoardMapper boardMapper;
 	
-	@Test
+	//@Test
 	void detailTest() throws Exception{
 		BoardVO boardVO = new BoardVO();
 		boardVO.setNum(3L);
@@ -25,23 +27,35 @@ class BoardMapperTest {
 		assertNotNull(boardVO);
 	}
 	
-	@Test
+	//@Test
 	void listTest() throws Exception{
-		List<BoardVO> list = boardMapper.getList();
+		Pager pager = new Pager();
+		pager.makeRow();
+		List<BoardVO> list = boardMapper.getList(pager);
 		
-		assertNotEquals(0, list.size());
+		assertEquals(10, list.size());
 	}
 	
-	//@Test
+	@Test
 	void insertTest() throws Exception{
-		BoardVO boardVO = new BoardVO();
-		boardVO.setTitle("TEST");
-		boardVO.setWriter("TEST");
-		boardVO.setContents("TEST");
 		
-		int result = boardMapper.setAdd(boardVO);
+		for(int i = 0; i < 100; i++) {
+			if(i % 10 == 0) {
+				Thread.sleep(1000);
+			}
+			
+			BoardVO boardVO = new BoardVO();
+			boardVO.setTitle("TEST" + i);
+			boardVO.setWriter("TEST" + i);
+			boardVO.setContents("TEST" + i);
+			
+			int result = boardMapper.setAdd(boardVO);
+			
+		}
 		
-		assertEquals(1, result);
+		System.out.println("Finish");
+		
+//		assertEquals(1, result);
 	}
 	
 	//@Test
@@ -64,6 +78,44 @@ class BoardMapperTest {
 		int result = boardMapper.setDelete(boardVO);
 		
 		assertEquals(1, result);
+	}
+	
+	//@Test
+	void insertFileTest() throws Exception{
+		BoardFilesVO boardFilesVO = new BoardFilesVO();
+		boardFilesVO.setFileName("TEST");
+		boardFilesVO.setOriName("TEST");
+		boardFilesVO.setNum(3L);
+		
+		int result = boardMapper.setFileAdd(boardFilesVO);
+		
+		assertEquals(1, result);
+	}
+	
+	//@Test
+	void deleteFileTest() throws Exception{
+		BoardFilesVO boardFilesVO = new BoardFilesVO();
+		boardFilesVO.setNum(3L);
+		
+		int result = boardMapper.setFileDelete(boardFilesVO);
+		
+		assertEquals(1, result);
+	}
+	
+	//@Test
+	void detailFileTest() throws Exception{
+		BoardFilesVO boardFilesVO = new BoardFilesVO();
+		boardFilesVO.setNum(3L);
+		boardFilesVO = boardMapper.getFileDetail(boardFilesVO);
+		
+		assertNotNull(boardFilesVO);
+	}
+	
+	//@Test
+	void listFileTest() throws Exception{
+		List<BoardFilesVO> list = boardMapper.getFileList();
+		
+		assertNotEquals(0, list.size());
 	}
 
 }
