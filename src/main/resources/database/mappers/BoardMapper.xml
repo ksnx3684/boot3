@@ -23,6 +23,7 @@
 		<result column="category" property="category"/>
 		<collection property="boardFilesVOs" javaType="java.util.List" ofType="BoardFilesVO">
 			<id column="fileNum" property="fileNum"/>
+			<result column="num" property="num"/>
 			<result column="fileName" property="fileName"/>
 			<result column="oriName" property="oriName"/>
 		</collection>
@@ -75,7 +76,12 @@
 	<delete id="setFileDelete" parameterType="BoardFilesVO">
 		DELETE FROM BOARDFILES WHERE NUM = #{num}
 	</delete>
-	
+	<select id="getFileDetail" parameterType="BoardFilesVO" resultType="BoardFilesVO">
+		SELECT * FROM BOARDFILES WHERE FILENUM = #{fileNum}
+	</select>
+	<select id="getFileList" parameterType="BoardVO" resultType="BoardFilesVO">
+		SELECT * FROM BOARDFILES WHERE NUM = #{num}
+	</select>
 	
 	
 </mapper>

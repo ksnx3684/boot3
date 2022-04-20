@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ksnx3684.boot3.util.FileManager;
 import com.ksnx3684.boot3.util.Pager;
 
 @Controller
@@ -89,12 +90,29 @@ public class BoardController {
 	}
 	
 	@GetMapping("delete")
-	public ModelAndView setDelete(BoardVO boardVO) throws Exception {
+	public ModelAndView setDelete(BoardVO boardVO, BoardFilesVO boardFilesVO) throws Exception {
 		ModelAndView mv = new ModelAndView();
 		
 		int result = boardService.setDelete(boardVO);
 		
+		result = boardService.setFileDelete(boardVO, boardFilesVO);
+		
 		mv.setViewName("redirect:./list");
+		
+		return mv;
+	}
+	
+	@GetMapping("fileDown")
+	public ModelAndView getFileDown(BoardFilesVO boardFilesVO) throws Exception{
+		ModelAndView mv = new ModelAndView();
+		
+		boardFilesVO = boardService.getFileDetail(boardFilesVO);
+		
+		// 속성명은 fileDown 클래스에서 사용하는 이름과 동일하게
+		mv.addObject("fileVO", boardFilesVO);
+		
+		// Bean(클래스)의 이름과 동일하게
+		mv.setViewName("fileDown");
 		
 		return mv;
 	}

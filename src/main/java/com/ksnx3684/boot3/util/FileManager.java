@@ -50,9 +50,9 @@ public class FileManager {
 	
 	public boolean fileRemove(String path, String fileName) throws Exception{
 		// 파일을 로컬에서 삭제
-		path = servletContext.getRealPath(path);
 		
-		File file = new File(path, fileName);
+		String realPath = servletContext.getRealPath(path);
+		File file = new File(realPath, fileName);
 		
 		return file.delete();
 	}

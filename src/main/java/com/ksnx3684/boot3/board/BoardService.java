@@ -54,6 +54,7 @@ public class BoardService {
 	}
 	
 	public BoardVO getDetail(BoardVO boardVO) throws Exception{
+		
 		return boardMapper.getDetail(boardVO);
 	}
 	
@@ -62,15 +63,23 @@ public class BoardService {
 	}
 	
 	public int setDelete(BoardVO boardVO) throws Exception{
-		
-		for(int i = 0; i < boardFilesVOs.size(); i++) {
-			fileManager.fileRemove("resources/upload/board/", boardFilesVOs.get(i).getFileName());
-			
-		}
-		int result = boardMapper.setDelete(boardVO);
-		
-		
-		return result;
+		return  boardMapper.setDelete(boardVO);
 	}
 	
+	public int setFileDelete(BoardVO boardVO, BoardFilesVO boardFilesVO) throws Exception{
+		List<BoardFilesVO> list = boardMapper.getFileList(boardVO);
+		System.out.println(list.get(0).getFileName());
+		
+		String fileName = boardMapper.getDetail(boardVO).getBoardFilesVOs().get(0).getFileName();
+		System.out.println(fileName);
+		FileManager fileManager = new FileManager();
+		String path = "resources/upload/board/";
+		fileManager.fileRemove(path, fileName);
+		
+		return boardMapper.setFileDelete(boardFilesVO);
+	}
+	
+	public BoardFilesVO getFileDetail(BoardFilesVO boardFilesVO) throws Exception{
+		return boardMapper.getFileDetail(boardFilesVO);
+	}
 }

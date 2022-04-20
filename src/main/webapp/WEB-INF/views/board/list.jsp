@@ -14,7 +14,24 @@
 	<div class="container mt-4">
 		<div class="row mt-4">
 			<div class="alert alert-primary" role="alert">
-			 <a href="./list"><h4 style="text-transform: capitalize;">${board} List</h4></a>
+			 	<c:choose>
+					<c:when test="${not empty auth}">
+						<a href="../member/mypage" type="button" class="col-1 btn btn-outline-primary">mypage</a>
+						<a href="../member/logout" type="button" class="col-1 btn btn-outline-primary">logout</a>
+					</c:when>
+					<c:otherwise>
+						<a href="../member/login" type="button" class="col-1 btn btn-outline-primary">login</a>
+						<a href="../member/join" type="button" class="col-1 btn btn-outline-primary">join</a>
+					</c:otherwise>
+				</c:choose>
+			</div>
+		</div>
+		<div class="row mt-4">
+			<div class="alert alert-primary" role="alert">
+			 <h4 style="text-transform: capitalize;">
+			 	<a href="./list">${board} List</a>
+			 	<a href="../">index</a>
+			 </h4>
 			</div>
 		</div>
 		<div class="row mt-4">
