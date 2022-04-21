@@ -63,12 +63,10 @@ public class BoardService {
 	}
 	
 	public int setDelete(BoardVO boardVO) throws Exception{
-		return  boardMapper.setDelete(boardVO);
+		return boardMapper.setDelete(boardVO);
 	}
 	
 	public int setFileDelete(BoardVO boardVO, BoardFilesVO boardFilesVO) throws Exception{
-		List<BoardFilesVO> list = boardMapper.getFileList(boardVO);
-		System.out.println(list.get(0).getFileName());
 		
 		String fileName = boardMapper.getDetail(boardVO).getBoardFilesVOs().get(0).getFileName();
 		System.out.println(fileName);
