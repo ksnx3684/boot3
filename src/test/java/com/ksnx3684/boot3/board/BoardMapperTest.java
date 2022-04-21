@@ -113,7 +113,8 @@ class BoardMapperTest {
 	
 	//@Test
 	void listFileTest() throws Exception{
-		List<BoardFilesVO> list = boardMapper.getFileList();
+		BoardVO boardVO = new BoardVO();
+		List<BoardFilesVO> list = boardMapper.getFileList(boardVO);
 		
 		assertNotEquals(0, list.size());
 	}

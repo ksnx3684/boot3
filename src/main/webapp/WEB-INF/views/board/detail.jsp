@@ -29,8 +29,10 @@
 				<img alt="" src="../resources/upload/board/${d.fileName}" name="files">
 			</c:if>
 		</c:forEach>
-		<c:forEach items="${vo.filesVOs}" var="f">
-			<a href="./fileDown?fileNum=${f.fileNum}"></a>
+		<c:forEach items="${detail.boardFilesVOs}" var="f">
+			<div>
+				<a href="./fileDown?fileNum=${f.fileNum}">${f.oriName}</a>
+			</div>
 		</c:forEach>
 		<div>
 			<a href="./update?num=${detail.num}" type="button" class="col-1 btn btn-outline-primary">Update</a>

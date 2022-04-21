@@ -79,8 +79,8 @@
 	<select id="getFileDetail" parameterType="BoardFilesVO" resultType="BoardFilesVO">
 		SELECT * FROM BOARDFILES WHERE FILENUM = #{fileNum}
 	</select>
-	<select id="getFileList" parameterType="BoardFilesVO" resultType="BoardFilesVO">
-		SELECT * FROM BOARDFILES
+	<select id="getFileList" parameterType="BoardVO" resultType="BoardFilesVO">
+		SELECT * FROM BOARDFILES WHERE NUM = #{num}
 	</select>
 	
 	

@@ -7,7 +7,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-<title>Update</title>
+	<title>Update</title>
 </head>
 <body>
 	<div class="container mt-4">
@@ -38,9 +38,11 @@
 			</div>
 	
 			<div>
+				<div id="fileResult">
+					
+				</div>
+				<button id="fileAdd" type="button" class="col-2 btn btn-outline-primary">File ADD</button>
 				<a href="./list" type="button" class="col-1 btn btn-outline-primary">List</a>
-				<input type="file" name="files">
-				<input type="file" name="files">
 				<button class="col-1 btn btn-outline-primary">Write</button>
 			</div>
 		</form>
@@ -48,4 +50,10 @@
 
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript">
+	$("#fileAdd").click(function(){
+		$("#fileResult").append('<input type="file" name="files">')
+	})
+</script>
 </html>

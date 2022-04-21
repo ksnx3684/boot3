@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.servlet.view.AbstractView;
 
-@Component("filedown")
+@Component("fileDown") // 이 클래스의 Bean이름과 controllor의 Mapping 이름과 같아야함
 public class FileDown extends AbstractView{
 	
 	@Autowired

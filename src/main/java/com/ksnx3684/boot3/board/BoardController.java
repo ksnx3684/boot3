@@ -94,9 +94,7 @@ public class BoardController {
 		ModelAndView mv = new ModelAndView();
 		
 		int result = boardService.setDelete(boardVO);
-		
-		result = boardService.setFileDelete(boardVO, boardFilesVO);
-		
+			
 		mv.setViewName("redirect:./list");
 		
 		return mv;

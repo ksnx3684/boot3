@@ -13,7 +13,7 @@
 	<div class="container mt-4">
 		<div class="row mt-4">
 			<div class="alert alert-primary" role="alert">
-			 <a href="./list"><h4 style="text-transform: capitalize;">${board} List</h4></a>
+				<a href="./list"><h4 style="text-transform: capitalize;">${board} List</h4></a>
 			</div>
 		</div>
 		<form action="./add" method="post" enctype="multipart/form-data">
@@ -37,9 +37,11 @@
 			</div>
 	
 			<div>
+				<div id="fileResult">
+					
+				</div>
+				<button id="fileAdd" type="button" class="col-2 btn btn-outline-primary">File ADD</button>
 				<a href="./list" type="button" class="col-1 btn btn-outline-primary">List</a>
-				<input type="file" name="files">
-				<input type="file" name="files">
 				<button class="col-1 btn btn-outline-primary">Write</button>
 			</div>
 		</form>
@@ -47,4 +49,23 @@
 	
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript">
+	let count = 1;
+	
+	$("#fileAdd").click(function(){
+		if(count < 6){
+			$("#fileResult").append('<div class="files"><input type="file" name="files"><button type="button" class="del">X</button></div>')
+			count++;
+		} else{
+			alert("5개 초과");
+		}
+	});
+	
+	$("#fileResult").on("click", ".del", function(){
+		$(this).parent().remove();
+		count--;
+	});
+	
+</script>
 </html>

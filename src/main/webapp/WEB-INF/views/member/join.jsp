@@ -20,6 +20,31 @@
 		</div>
 		<form action="./join" method="post" enctype="multipart/form-data">
 			<div class="main">
+				<div class="form-check">
+					<input class="form-check-input checkAll" type="checkbox" id="checkAll" value="1">
+					<label class="form-check-label" for="checkAll">
+				    checkAll
+					</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input ch" type="checkbox" id="check1" value="2">
+					<label class="form-check-label" for="check1">
+				   	check1
+					</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input ch" type="checkbox" id="check2" value="3">
+					<label class="form-check-label" for="check2">
+				   	check2
+					</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input ch" type="checkbox" id="check3" value="4">
+					<label class="form-check-label" for="check3">
+				   	check3
+					</label>
+				</div>
+			
 				<div>
 					<label>아이디</label>
 					<input type="id" name="id" placeholder="id">
@@ -53,4 +78,29 @@
 
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript">
+	/* $(".checkAll").click(function(){
+		if($(this).prop("checked")){
+			$(".ch").prop("checked", true);
+		} else{
+			$(".ch").prop("checked", false);
+		}
+	}); */
+	$("#checkAll").click(function(){
+		$(".ch").prop("checked", $("#checkAll").prop("checked"));
+	});
+	
+	$(".ch").on("click", function(){
+		let check = true;
+		$(".ch").each(function(idx, item){
+			if(!$(item).prop("checked")){
+				check = false;
+			}
+		});
+		$("#checkAll").prop("checked", check);
+	});
+</script>
+
+
 </html>

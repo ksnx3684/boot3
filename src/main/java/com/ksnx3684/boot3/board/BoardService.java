@@ -30,25 +30,29 @@ public class BoardService {
 		int result = boardMapper.setAdd(boardVO);
 		System.out.println("Insert 후 : " + boardVO.getNum());
 		
-		for(MultipartFile mf : files) {
+		if(files != null) {
 			
-			if(mf.isEmpty()) {
-				continue;
+			for(MultipartFile mf : files) {
+				
+				if(mf.isEmpty()) {
+					continue;
+				}
+				
+				// 1. File을 로컬디스크에 저장
+				String fileName = fileManager.fileSave(mf, "resources/upload/board/");
+				System.out.println(fileName);
+				
+				// 2. 저장된 정보를 로컬디스크에 저장
+				BoardFilesVO boardFilesVO = new BoardFilesVO();
+				boardFilesVO.setNum(boardVO.getNum());
+				boardFilesVO.setFileName(fileName);
+				boardFilesVO.setOriName(mf.getOriginalFilename());
+				
+				result = boardMapper.setFileAdd(boardFilesVO);
+				
 			}
-			
-			// 1. File을 로컬디스크에 저장
-			String fileName = fileManager.fileSave(mf, "resources/upload/board/");
-			System.out.println(fileName);
-			
-			// 2. 저장된 정보를 로컬디스크에 저장
-			BoardFilesVO boardFilesVO = new BoardFilesVO();
-			boardFilesVO.setNum(boardVO.getNum());
-			boardFilesVO.setFileName(fileName);
-			boardFilesVO.setOriName(mf.getOriginalFilename());
-			
-			result = boardMapper.setFileAdd(boardFilesVO);
-			
 		}
+		
 		
 		return result;
 	}
@@ -63,18 +67,16 @@ public class BoardService {
 	}
 	
 	public int setDelete(BoardVO boardVO) throws Exception{
-		return boardMapper.setDelete(boardVO);
-	}
-	
-	public int setFileDelete(BoardVO boardVO, BoardFilesVO boardFilesVO) throws Exception{
 		
-		String fileName = boardMapper.getDetail(boardVO).getBoardFilesVOs().get(0).getFileName();
-		System.out.println(fileName);
-		FileManager fileManager = new FileManager();
-		String path = "resources/upload/board/";
-		fileManager.fileRemove(path, fileName);
+		List<BoardFilesVO> list = boardMapper.getFileList(boardVO);
 		
-		return boardMapper.setFileDelete(boardFilesVO);
+		int result = boardMapper.setDelete(boardVO);
+		
+		for(BoardFilesVO f : list) {
+			fileManager.fileRemove("resources/upload/board", f.getFileName());
+		}
+		
+		return result;
 	}
 	
 	public BoardFilesVO getFileDetail(BoardFilesVO boardFilesVO) throws Exception{
