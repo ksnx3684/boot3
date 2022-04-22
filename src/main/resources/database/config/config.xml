@@ -9,6 +9,8 @@
   		<typeAlias type="com.ksnx3684.boot3.member.MemberFilesVO" alias="MemberFilesVO"/>
   		<typeAlias type="com.ksnx3684.boot3.board.BoardVO" alias="BoardVO"/>
   		<typeAlias type="com.ksnx3684.boot3.board.BoardFilesVO" alias="BoardFilesVO"/>
+  		<typeAlias type="com.ksnx3684.boot3.product.ProductVO" alias="ProductVO"/>
+  		<typeAlias type="com.ksnx3684.boot3.product.ProductFilesVO" alias="ProductFilesVO"/>
   		<typeAlias type="com.ksnx3684.boot3.util.Pager" alias="Pager"/>
   	</typeAliases>
   </configuration>

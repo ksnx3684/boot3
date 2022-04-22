@@ -11,41 +11,48 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+		
+	
 </head>
 <body>
 	<div class="container mt-4">
 		<div class="row mt-4">
 			<div class="alert alert-primary" role="alert">
-				<a href="./list"><h4 style="text-transform: capitalize;">${board} List</h4></a>
+				<a href="./list"><h4 style="text-transform: capitalize;">Product List</h4></a>
 			</div>
 		</div>
 		<form action="./add" method="post" enctype="multipart/form-data">
 			<div class="mt-3 mb-3 row">
-				<label class="col-sm-2 col-form-label">작성자</label>
+				<label class="col-sm-2 col-form-label">제품명</label>
 				<div class="col-sm-3">
-					<input type="text" class="form-control" name="writer">
+					<input type="text" class="form-control" name="productName">
 				</div>
 			</div>
 			<div class="mt-3 mb-3 row">
-				<label class="col-sm-2 col-form-label">제목</label>
-				<div class="col-sm-10">
-					<input type="text" class="form-control" name="title">
+				<label class="col-sm-2 col-form-label">가격</label>
+				<div class="col-sm-3">
+					<input type="text" class="form-control" name="productPrice">
 				</div>
 			</div>
 			<div class="mb-3 row">
-				<label class="col-sm-2 col-form-label">내용</label>
-				<div class="col-sm-10">
-					<textarea class="form-control" id="summernote" name="contents" rows="5"></textarea>
+				<label class="col-sm-2 col-form-label">수량</label>
+				<div class="col-sm-3">
+					<input type="text" class="form-control" name="productCount"></input>
 				</div>
 			</div>
-	
+			<div class="mb-3 row">
+				<label class="col-sm-2 col-form-label">상세설명</label>
+				<div class="col-sm-10">
+					<textarea class="form-control" id="summernote" name="productDetail" rows="5"></textarea>
+				</div>
+			</div>
 			<div>
 				<div id="fileResult">
 					
 				</div>
 				<button id="fileAdd" type="button" class="col-2 btn btn-outline-primary">File ADD</button>
 				<a href="./list" type="button" class="col-1 btn btn-outline-primary">List</a>
-				<button class="col-1 btn btn-outline-primary">Write</button>
+				<button class="col-1 btn btn-outline-primary">Add</button>
 			</div>
 		</form>
 	</div>
@@ -75,4 +82,5 @@
 	});
 	
 </script>
+</body>
 </html>

@@ -4,10 +4,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
+<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-	<title>List</title>
+	<title>Product List</title>
 </head>
 <body>
 
@@ -30,46 +30,21 @@
 			<div class="alert alert-primary" role="alert">
 			 <h4 style="text-transform: capitalize;">
 			 	<a href="../">index</a>
-			 	<a href="./list">${board} List</a>
-			 	<a href="../product/list">Product List</a>
+			 	<a href="../board/list">Board List</a>
+			 	<a href="./list">Product List</a>
 			 </h4>
 			</div>
-		</div>
-		<div class="row mt-4">
-			<table class="table">
-				<thead>
-					<tr>
-			          <th>번호</th>
-			          <th>제목</th>
-			          <th>작성자</th>
-			          <th>조회수</th>
-			          <th>작성일</th>
-			        </tr>
-				</thead>
-				<tbody>
-				<c:forEach items="${list}" var="vo">
-					<tr>
-						<th>${vo.num}</th>
-						<th><a href="./detail?num=${vo.num}">${vo.title}</a></th>
-						<th>${vo.writer}</th>
-						<th>${vo.hit}</th>
-						<th>${vo.regDate}</th>
-					</tr>	
-				</c:forEach>
-				</tbody>
-			</table>
 		</div>
 		<div class="d-flex justify-content-between">
 				<form action="./list" method="get" class="search-form" style="display: inline">
 					<select name="kind">
-						<option value="title">제목</option>
-						<option value="contents">내용</option>
-						<option value="writer">작성자</option>
+						<option value="productName">상품명</option>
+						<option value="productDetail">내용</option>
 					</select>
 			    	<input type="search" name="search" value="${pager.search}" placeholder="Search">
 			    	<button type="submit" class="btn btn-outline-success">Search</button>
 		   		</form>
-			<a href="./add" type="button" class="col-1 btn btn-outline-primary">Write</a>
+			<a href="./add" type="button" class="col-1 btn btn-outline-primary">Add</a>
 		</div>
 		<div class="pager">
 			<c:if test="${pager.pre}">
@@ -82,9 +57,25 @@
 				<a href="./list?pn=${pager.next?pager.lastNum+1:pager.lastNum}">NEXT</a>
 			</c:if>
 		</div>
+		
+		<div class="items">
+			<ul>
+				<c:forEach items="${product}" var="vo">
+					<li class="each" style="list-style: none; float: left; margin-right:20px; margin-bottom:20px">
+						<div class="card">
+						 	<img src="../resources/upload/product/${vo.productFilesVOs[0].fileName}" class="card-img-top" style="width:250px; height:250px;">
+						 	<div class="card-body">
+								<h5 class="card-title"><a href="./detail?productNum=${vo.productNum}">${vo.productName}</a></h5>
+						    	<p class="card-text">${vo.productPrice}원</p>
+							</div>
+						</div>
+					</li>
+				</c:forEach>
+			</ul>
+		</div>
+		
 	</div>
-
-
-</body>
+	
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</body>
 </html>
