@@ -22,7 +22,7 @@
 	</c:choose>
 	
 	<div class="container">
-		<input type="text" id="d1">
+		<!-- <input type="text" id="d1">
 		<button id="btn">Click</button>
 		<button id="btn2">Click2</button>
 		<input type="checkbox" name="ch" class="ch" value="1">
@@ -31,14 +31,77 @@
 		<input type="checkbox" name="ch" class="ch" value="4">
 		<button id="btn3">Click3</button>
 		<div id="result">
-			
-		</div>
+		
+		</div> -->
+		
+		
+		<input type="text" id="v1">
+		
+		<input type="checkbox" class="num" name="num" value="a">
+		<input type="checkbox" class="num" name="num" value="b">
+		<input type="checkbox" class="num" name="num" value="c">
+		<input type="checkbox" class="num" name="num" value="d">
+		
+		<button id="btn1">GET</button>
+		<button id="btn2">POST</button>
+		<button id="btn3">AJAX</button>
 	</div>
 	
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
+
+	$("#btn1").click(function(){
+		let v = $("#v1").val();
+		console.log(v);
+		$.get("./getTest?msg="+v, function(data){
+			console.log("응답완료");
+			console.log(data.trim());
+		});
+	});
+	
+	$("#btn2").click(function(){
+		let v = $("#v1").val();
+		console.log(v);
+		$.post("./postTest", {msg:v}, function(data){
+			console.log("응답완료");
+			console.log(data.trim());
+		});
+	});
+	
+	$("#btn3").click(function(){
+		
+		let list = [];
+		$(".num").each(function(idx, item){
+			if($(item).prop("checked")){
+				list.push($(item).val());
+			}
+		})
+		
+		let v = $("#v1").val();
+		$.ajax({
+			type : "POST",
+			url : "./arrayTest",
+			data : {
+				msg : v,
+				checklist : list
+			},
+			traditional : true,
+			
+			success : function(d){
+				console.log(d.trim());
+			},
+			error : function(){
+				alert("에러 발생");
+			}
+		});
+	});
+
+</script>
+
+
+<!-- <script type="text/javascript">
 	$("#btn2").click(function(){
 		alert("click");
 		$(".ch").each(function(idx, item){
@@ -81,5 +144,5 @@
 	$("#btn3").click(function(){
 		$("#result").append('<input type="checkbox" name="ch" class="ch" value="1">');
 	})
-</script>
+</script> -->
 </html>

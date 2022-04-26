@@ -21,7 +21,7 @@ public class ProductController {
 	private ProductService productService;
 	
 	@GetMapping("list")
-	public ModelAndView list(Pager pager, ProductVO productVO) throws Exception{
+	public ModelAndView list(Pager pager) throws Exception{
 		ModelAndView mv = new ModelAndView();
 		
 		List<ProductVO> list = productService.list(pager);
@@ -42,11 +42,20 @@ public class ProductController {
 	}
 	
 	@PostMapping("add")
-	public String add(ProductVO productVO, MultipartFile[] files) throws Exception{
+	public ModelAndView add(ProductVO productVO, MultipartFile[] files) throws Exception{
+		ModelAndView mv = new ModelAndView();
+		
+		for(MultipartFile f : files) {
+			System.out.println(f.getOriginalFilename());
+			System.out.println(f.getSize());
+		}
 		
 		int result = productService.add(productVO, files);
 		
-		return "redirect:./list";
+		mv.addObject("result", result);
+		mv.setViewName("common/result");
+		
+		return mv;
 	}
 	
 	@GetMapping("detail")
@@ -57,6 +66,19 @@ public class ProductController {
 		
 		mv.addObject("productDetail", productVO);
 		mv.setViewName("product/detail");
+		
+		return mv;
+	}
+	
+	@GetMapping("ajaxList")
+	public ModelAndView ajaxList(Pager pager) throws Exception{
+		ModelAndView mv = new ModelAndView();
+		
+		List<ProductVO> list = productService.list(pager);
+		
+		mv.addObject("ajaxList", list);
+		mv.addObject("pager", pager);
+		mv.setViewName("common/productList");
 		
 		return mv;
 	}

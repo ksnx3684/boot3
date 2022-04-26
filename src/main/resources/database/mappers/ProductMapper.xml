@@ -3,7 +3,7 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ksnx3684.boot3.product.ProductMapper">
-	<resultMap type="ProductVO" id="ProductVO">
+	<resultMap type="ProductVO" id="listResult">
 		<id column="productNum" property="productNum"/>
 		<result column="productName" property="productName"/>
 		<result column="productPrice" property="productPrice"/>
@@ -16,17 +16,17 @@
 			<result column="oriName" property="oriName"/>
 		</collection>
 	</resultMap>
-
-	<select id="list" parameterType="Pager" resultMap="ProductVO">
+	 
+	<select id="list" parameterType="Pager" resultMap="listResult">
 		SELECT * FROM
 		(SELECT * FROM PRODUCT WHERE PRODUCTNUM > 0 AND
 		<choose>
 			<when test="kind=='productName'">
 				PRODUCTNAME
 			</when>
-			<when test="kind=='productDetail'">
+			<otherwise>
 				PRODUCTDETAIL
-			</when>
+			</otherwise>
 		</choose>
 		LIKE CONCAT('%', #{search},'%')
 		ORDER BY PRODUCTNUM DESC LIMIT #{startRow}, #{perPage}) P
@@ -35,15 +35,16 @@
 		ON P.PRODUCTNUM = PF.PRODUCTNUM
 		ORDER BY P.PRODUCTNUM DESC
 	</select>
+	
 	<select id="totalCount" parameterType="Pager" resultType="java.lang.Long">
-		SELECT COUNT(PRODUCTNUM) FROM PRODUCT WHERE
+		SELECT COUNT(PRODUCTNUM) FROM PRODUCT WHERE PRODUCTNUM > 0 AND
 		<choose>
 			<when test="kind=='productName'">
 				PRODUCTNAME
 			</when>
-			<when test="kind=='productDetail'">
+			<otherwise>
 				PRODUCTDETAIL
-			</when>
+			</otherwise>
 		</choose>
 		LIKE CONCAT('%', #{search},'%')
 	</select>
@@ -53,7 +54,7 @@
 	<insert id="addFile" parameterType="ProductFilesVO">
 		INSERT INTO PRODUCTFILES VALUES(NULL, #{productNum}, #{fileName}, #{oriName})
 	</insert>
-	<select id="detail" parameterType="ProductVO" resultMap="ProductVO">
+	<select id="detail" parameterType="ProductVO" resultMap="listResult">
 		SELECT * FROM PRODUCT P
 		LEFT OUTER JOIN
 		PRODUCTFILES PF

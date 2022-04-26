@@ -67,7 +67,7 @@ public class MemberController {
 		model.addAttribute("message", message);
 		model.addAttribute("path", p);
 		
-		String path = "common/result";
+		String path = "common/loginresult";
 		
 		return path;
 	}
