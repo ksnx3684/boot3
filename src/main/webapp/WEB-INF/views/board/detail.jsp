@@ -26,7 +26,7 @@
 		<c:forEach items="${detail.boardFilesVOs}" var="d">
 			<c:if test="${d.fileName ne null}">
 				<input type="hidden" name="fileNum" value="${d.fileNum}">
-				<img alt="" src="../resources/upload/board/${d.fileName}" name="files">
+				<%-- <img alt="" src="../resources/upload/board/${d.fileName}" name="files"> --%>
 			</c:if>
 		</c:forEach>
 		<c:forEach items="${detail.boardFilesVOs}" var="f">

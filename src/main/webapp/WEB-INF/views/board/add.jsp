@@ -55,7 +55,46 @@
 
 <script type="text/javascript">
 	$('#summernote').summernote({
-		height: 300
+		height: 300,
+		placeholder: '내용을 입력하세요',
+		callbacks: {
+			onImageUpload: function(files){
+				// files upload한 이미지 파일 객체
+				let formData = new FormData();
+				formData.append("files", files[0]);
+				
+				// /board/summerFileUpload
+				$.ajax({
+					type: "post",
+					url: "./summerFileUpload",
+					data: formData,
+					contentType:false,
+					processData:false,
+					
+					success: function(data){
+						$('#summernote').summernote('editor.insertImage', data.trim());
+						alert("파일 업로드 성공");
+					}
+					
+				});
+			}, // onImageUpload 끝
+			onMediaDelete:function(files){
+				let fileName = $(files[0]).attr("src");
+				console.log(fileName);
+				$.ajax({
+					type: "get",
+					url: "./summerFileDelete",
+					data: {
+						fileName : fileName
+					},
+					
+					success: function(data){
+						let v = data.trim();
+						console.log(v);
+					}
+				});
+			}
+		}
 	});
 
 	let count = 1;

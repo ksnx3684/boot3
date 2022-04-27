@@ -1,14 +1,21 @@
 package com.ksnx3684.boot3.start;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.ksnx3684.boot3.aop.TransferService;
+
 @Controller
 public class HomeController {
 
+	@Autowired
+	private TransferService transferService;
+	
 	@GetMapping("/")
 	public String start() {
+		transferService.go();
 		return "index";
 	}
 	
