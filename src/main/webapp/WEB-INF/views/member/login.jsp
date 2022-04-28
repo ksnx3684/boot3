@@ -13,8 +13,9 @@
 		<div class="row mt-4">
 			<div class="alert alert-primary" role="alert">
 			 <h4 style="text-transform: capitalize;">
-			 	<a href="../board/list">Board List</a>
 			 	<a href="../">index</a>
+			 	<a href="../board/list">Board List</a>
+			 	<a href="../product/list">Product List</a>
 			 </h4>
 			</div>
 		</div>

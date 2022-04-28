@@ -23,7 +23,7 @@
 			<div class="mt-3 mb-3 row">
 				<label class="col-sm-2 col-form-label">작성자</label>
 				<div class="col-sm-3">
-					<input type="text" class="form-control" name="writer">
+					<input type="text" class="form-control" name="writer" value="${auth.id}" readonly>
 				</div>
 			</div>
 			<div class="mt-3 mb-3 row">

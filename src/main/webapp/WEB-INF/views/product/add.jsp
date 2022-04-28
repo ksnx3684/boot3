@@ -51,6 +51,20 @@
 					<textarea class="form-control" id="productDetail" name="productDetail" rows="5"></textarea>
 				</div>
 			</div>
+			<div class="mb-3 row">
+				<div class="form-check">
+				  <input class="form-check-input sale" type="radio" value="1" name="sale" id="flexCheckDefault">
+				  <label class="form-check-label" for="flexCheckDefault">
+				    판매
+				  </label>
+				</div>
+				<div class="form-check">
+				  <input class="form-check-input sale" type="radio" value="0" name="sale" id="flexCheckDefault" checked>
+				  <label class="form-check-label" for="flexCheckDefault">
+				    판매중지
+				  </label>
+				</div>
+			</div>
 			<div>
 				<div id="fileResult">
 					
@@ -71,7 +85,7 @@
 	$("#list").on("click", ".pager", function(){
 		let checkPn = $(this).attr("data-pn");
 		if(checkPn > 0){
-			pn=checkPn;
+			//pn=checkPn;
 			getList(checkPn)
 		} else {
 			// 이전 또는 다음 Block이 X
@@ -98,22 +112,7 @@
 	$('#productDetail').summernote({
 		height: 300
 	});
-
-	let count = 1;
 	
-	$("#fileAdd").click(function(){
-		if(count < 6){
-			$("#fileResult").append('<div class="files"><input type="file" id="files" name="files"><button type="button" class="del">X</button></div>');
-			count++;
-		} else{
-			alert("5개 초과");
-		}
-	});
-	
-	$("#fileResult").on("click", ".del", function(){
-		$(this).parent().remove();
-		count--;
-	});
 	
 	
 	$("#Add").click(function(){
@@ -121,7 +120,12 @@
 		let productName = $("#productName").val();
 		let productPrice = $("#productPrice").val();
 		let productCount = $("#productCount").val();
-		let productDetail = $("#productDetail").summernote("code", ""); // $("#productDetail").val();
+		let productDetail = $("#productDetail").summernote("code"); // $("#productDetail").val();
+		$(".sale").each(function(idx, item){
+			if($(item).prop("checked")){
+				sale = $(item).val();
+			}
+		})
 		$("#files").each(function(idx, item) {
 			if(item.files.length > 0){
 				console.log(idx);
@@ -139,6 +143,7 @@
 		formData.append("productPrice", productPrice);
 		formData.append("productCount", productCount);
 		formData.append("productDetail", productDetail);
+		formData.append("sale", sale);
 		
 		$.ajax({
 			type : "post",
@@ -170,6 +175,23 @@
 				alert("error 발생");
 			}
 		});
+	});
+	
+	
+	let count = 1;
+	
+	$("#fileAdd").click(function(){
+		if(count < 6){
+			$("#fileResult").append('<div class="files"><input type="file" id="files" name="files"><button type="button" class="del">X</button></div>');
+			count++;
+		} else{
+			alert("5개 초과");
+		}
+	});
+	
+	$("#fileResult").on("click", ".del", function(){
+		$(this).parent().remove();
+		count--;
 	});
 	
 </script>

@@ -9,6 +9,8 @@
 		<result column="productPrice" property="productPrice"/>
 		<result column="productCount" property="productCount"/>
 		<result column="productDetail" property="productDetail"/>
+		<result column="id" property="id"/>
+		<result column="sale" property="sale"/>
 		<collection property="productFilesVOs" javaType="java.util.List" ofType="ProductFilesVO">
 			<id column="fileNum" property="fileNum"/>
 			<result column="productNum" property="productNum"/>
@@ -19,7 +21,16 @@
 	 
 	<select id="list" parameterType="Pager" resultMap="listResult">
 		SELECT * FROM
-		(SELECT * FROM PRODUCT WHERE PRODUCTNUM > 0 AND
+		(SELECT * FROM PRODUCT WHERE PRODUCTNUM > 0
+		<choose>
+			<when test="id != null">
+				AND ID = #{id}
+			</when>
+			<otherwise>
+				AND SALE = 1
+			</otherwise>
+		</choose>
+		AND
 		<choose>
 			<when test="kind=='productName'">
 				PRODUCTNAME
@@ -36,8 +47,12 @@
 		ORDER BY P.PRODUCTNUM DESC
 	</select>
 	
+	
 	<select id="totalCount" parameterType="Pager" resultType="java.lang.Long">
 		SELECT COUNT(PRODUCTNUM) FROM PRODUCT WHERE PRODUCTNUM > 0 AND
+		<if test="id != null">
+			ID = #{id}
+		</if>
 		<choose>
 			<when test="kind=='productName'">
 				PRODUCTNAME
@@ -49,7 +64,8 @@
 		LIKE CONCAT('%', #{search},'%')
 	</select>
 	<insert id="add" parameterType="ProductVO" useGeneratedKeys="true" keyProperty="productNum">
-		INSERT INTO PRODUCT VALUES(#{productNum}, #{productName}, #{productPrice}, #{productCount}, #{productDetail})
+		INSERT INTO PRODUCT
+		VALUES(#{productNum}, #{productName}, #{productPrice}, #{productCount}, #{productDetail}, #{id}, #{sale})
 	</insert>
 	<insert id="addFile" parameterType="ProductFilesVO">
 		INSERT INTO PRODUCTFILES VALUES(NULL, #{productNum}, #{fileName}, #{oriName})

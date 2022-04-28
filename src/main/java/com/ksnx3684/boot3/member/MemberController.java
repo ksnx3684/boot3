@@ -1,7 +1,5 @@
 package com.ksnx3684.boot3.member;
 
-import java.lang.reflect.Member;
-
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 

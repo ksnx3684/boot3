@@ -1,12 +1,18 @@
 package com.ksnx3684.boot3.member;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ksnx3684.boot3.util.FileManager;
 
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class MemberService {
 
 	@Autowired
@@ -15,8 +21,17 @@ public class MemberService {
 	@Autowired
 	private FileManager fileManager;
 	
-	public int join(MemberVO memberVO , MultipartFile multipartFile) throws Exception{
+	// properties 파일의 member.role.member 속성값 반환
+	@Value("${member.role.member}")
+	private String memberRole;
+	
+	public int join(MemberVO memberVO, MultipartFile multipartFile) throws Exception{
 		int result = memberMapper.join(memberVO);
+		
+		Map<String, String> map = new HashMap<>();
+		map.put("id", memberVO.getId());
+		map.put("roleName", memberRole);
+		result = memberMapper.memberRole(map);
 		
 		// 1. 파일을 로컬에 저장
 		String fileName = fileManager.fileSave(multipartFile, "resources/upload/member/");

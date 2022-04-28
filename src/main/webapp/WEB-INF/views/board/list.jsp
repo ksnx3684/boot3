@@ -24,6 +24,11 @@
 						<a href="../member/join" type="button" class="col-1 btn btn-outline-primary">join</a>
 					</c:otherwise>
 				</c:choose>
+				<c:forEach items="${auth.roleVOs}" var="vo">
+					<c:if test="${vo.roleName eq 'ROLE_ADMIN'}">
+						<a href="../admin/manage" type="button" class="col-1 btn btn-outline-primary">ADMIN Manage</a>
+					</c:if>
+				</c:forEach>
 			</div>
 		</div>
 		<div class="row mt-4">

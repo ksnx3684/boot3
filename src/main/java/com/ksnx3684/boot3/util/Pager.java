@@ -5,6 +5,8 @@ import lombok.Data;
 @Data
 public class Pager {
 	
+	private String id;
+	
 	// DB에서 한 페이지 당 몇개 씩 조회할지 결정(파라미터의 값으로도 가능)
 	private Integer perPage;
 	// DB에서 조회할 시작 인덱스 번호
