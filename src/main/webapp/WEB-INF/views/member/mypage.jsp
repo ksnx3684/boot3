@@ -11,14 +11,8 @@
 </head>
 <body>
 	<div class="container mt-4">
-		<div class="row mt-4">
-			<div class="alert alert-primary" role="alert">
-			 <h4 style="text-transform: capitalize;">
-			 	<a href="../board/list">Board List</a>
-			 	<a href="../">index</a>
-			 </h4>
-			</div>
-		</div>
+	
+		<c:import url="../template/header.jsp"></c:import>
 		
 		<c:if test="${mypage.memberFilesVO.fileName ne null}">
 			<img alt="" src="../resources/upload/member/${mypage.memberFilesVO.fileName}">

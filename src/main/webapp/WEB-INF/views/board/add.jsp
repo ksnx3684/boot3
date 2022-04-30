@@ -14,11 +14,9 @@
 </head>
 <body>
 	<div class="container mt-4">
-		<div class="row mt-4">
-			<div class="alert alert-primary" role="alert">
-				<a href="./list"><h4 style="text-transform: capitalize;">${board} List</h4></a>
-			</div>
-		</div>
+		
+		<c:import url="../template/header.jsp"></c:import>
+		
 		<form action="./add" method="post" enctype="multipart/form-data">
 			<div class="mt-3 mb-3 row">
 				<label class="col-sm-2 col-form-label">작성자</label>

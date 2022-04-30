@@ -12,34 +12,9 @@
 <body>
 
 	<div class="container mt-4">
-		<div class="row mt-4">
-			<div class="alert alert-primary" role="alert">
-			 	<c:choose>
-					<c:when test="${not empty auth}">
-						<a href="../member/mypage" type="button" class="col-1 btn btn-outline-primary">mypage</a>
-						<a href="../member/logout" type="button" class="col-1 btn btn-outline-primary">logout</a>
-					</c:when>
-					<c:otherwise>
-						<a href="../member/login" type="button" class="col-1 btn btn-outline-primary">login</a>
-						<a href="../member/join" type="button" class="col-1 btn btn-outline-primary">join</a>
-					</c:otherwise>
-				</c:choose>
-				<c:forEach items="${auth.roleVOs}" var="vo">
-					<c:if test="${vo.roleName eq 'ROLE_ADMIN'}">
-						<a href="../admin/manage" type="button" class="col-1 btn btn-outline-primary">ADMIN Manage</a>
-					</c:if>
-				</c:forEach>
-			</div>
-		</div>
-		<div class="row mt-4">
-			<div class="alert alert-primary" role="alert">
-			 <h4 style="text-transform: capitalize;">
-			 	<a href="../">index</a>
-			 	<a href="./list">${board} List</a>
-			 	<a href="../product/list">Product List</a>
-			 </h4>
-			</div>
-		</div>
+		
+		<c:import url="../template/header.jsp"></c:import>
+		
 		<div class="row mt-4">
 			<table class="table">
 				<thead>

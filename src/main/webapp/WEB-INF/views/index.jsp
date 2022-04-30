@@ -10,49 +10,43 @@
 	<title>index</title>
 </head>
 <body>
-	<c:choose>
-		<c:when test="${not empty auth}">
-			<a href="../member/mypage" type="button" class="col-1 btn btn-outline-primary">mypage</a>
-			<a href="../member/logout" type="button" class="col-1 btn btn-outline-primary">logout</a>
-		</c:when>
-		<c:otherwise>
-			<a href="../member/login" type="button" class="col-1 btn btn-outline-primary">login</a>
-			<a href="../member/join" type="button" class="col-1 btn btn-outline-primary">join</a>
-		</c:otherwise>
-	</c:choose>
+	<div class="container mt-4">
 	
-	<div class="container">
-		<!-- <input type="text" id="d1">
-		<button id="btn">Click</button>
-		<button id="btn2">Click2</button>
-		<input type="checkbox" name="ch" class="ch" value="1">
-		<input type="checkbox" name="ch" class="ch" value="2">
-		<input type="checkbox" name="ch" class="ch" value="3">
-		<input type="checkbox" name="ch" class="ch" value="4">
-		<button id="btn3">Click3</button>
-		<div id="result">
+		<c:import url="./template/header.jsp"></c:import>
 		
-		</div> -->
+		<div class="container">
+			<!-- <input type="text" id="d1">
+			<button id="btn">Click</button>
+			<button id="btn2">Click2</button>
+			<input type="checkbox" name="ch" class="ch" value="1">
+			<input type="checkbox" name="ch" class="ch" value="2">
+			<input type="checkbox" name="ch" class="ch" value="3">
+			<input type="checkbox" name="ch" class="ch" value="4">
+			<button id="btn3">Click3</button>
+			<div id="result">
+			
+			</div> -->
+			
+			
+			<input type="text" id="v1">
+			
+			<input type="checkbox" class="num" name="num" value="a">
+			<input type="checkbox" class="num" name="num" value="b">
+			<input type="checkbox" class="num" name="num" value="c">
+			<input type="checkbox" class="num" name="num" value="d">
+			
+			<button id="btn1">GET</button>
+			<button id="btn2">POST</button>
+			<button id="btn3">AJAX</button>
+		</div>
 		
-		
-		<input type="text" id="v1">
-		
-		<input type="checkbox" class="num" name="num" value="a">
-		<input type="checkbox" class="num" name="num" value="b">
-		<input type="checkbox" class="num" name="num" value="c">
-		<input type="checkbox" class="num" name="num" value="d">
-		
-		<button id="btn1">GET</button>
-		<button id="btn2">POST</button>
-		<button id="btn3">AJAX</button>
-	</div>
-	
-	<div class="container">
-		<c:if test="${not empty auth}">
-			<c:forEach items="${auth.roleVOs}" var="vo">
-				<h3>${vo.roleName}</h3>
-			</c:forEach>
-		</c:if>
+		<div class="container">
+			<c:if test="${not empty auth}">
+				<c:forEach items="${auth.roleVOs}" var="vo">
+					<h3>${vo.roleName}</h3>
+				</c:forEach>
+			</c:if>
+		</div>
 	</div>
 	
 </body>

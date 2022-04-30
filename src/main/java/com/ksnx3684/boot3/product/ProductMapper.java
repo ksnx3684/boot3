@@ -23,4 +23,16 @@ public interface ProductMapper {
 	
 	// detail
 	public ProductVO detail(ProductVO productVO) throws Exception;
+	
+	// update
+	public int update(ProductVO productVO) throws Exception;
+	
+	// fileDelete
+	public int fileDelete(ProductFilesVO productFilesVO) throws Exception;
+	
+	// fileDetail
+	public ProductFilesVO fileDetail(ProductFilesVO productFilesVO) throws Exception;
+	
+	// delete
+	public int delete(ProductVO productVO) throws Exception;
 }

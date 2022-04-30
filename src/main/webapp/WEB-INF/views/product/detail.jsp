@@ -11,32 +11,30 @@
 </head>
 <body>
 	<div class="container mt-4">
-		<div class="row mt-4">
-			<div class="alert alert-primary" role="alert">
-				<a href="./list"><h4 style="text-transform: capitalize;">Product List</h4></a>
-			</div>
-		</div>
-		<input type="hidden" name="num" value="${productDetail.productNum}">
+		
+		<c:import url="../template/header.jsp"></c:import>
+		
+		<input type="hidden" name="num" value="${vo.productNum}">
 		<h1>Detail Page</h1>
-		<h3>productNum : ${productDetail.productNum}</h3>
-		<h3>name : ${productDetail.productName}</h3>
-		<h3>price : ${productDetail.productPrice}</h3>
-		<h3>count: ${productDetail.productCount}</h3>
-		<h3>detail : ${productDetail.productDetail}</h3>
-		<c:forEach items="${productDetail.productFilesVOs}" var="d">
+		<h3>productNum : ${vo.productNum}</h3>
+		<h3>name : ${vo.productName}</h3>
+		<h3>price : ${vo.productPrice}</h3>
+		<h3>count: ${vo.productCount}</h3>
+		<h3>detail : ${vo.productDetail}</h3>
+		<c:forEach items="${vo.productFilesVOs}" var="d">
 			<c:if test="${d.fileName ne null}">
 				<input type="hidden" name="fileNum" value="${d.fileNum}">
 				<img alt="" src="../resources/upload/product/${d.fileName}" name="files">
 			</c:if>
 		</c:forEach>
-		<c:forEach items="${productDetail.productFilesVOs}" var="f">
+		<c:forEach items="${vo.productFilesVOs}" var="f">
 			<div>
 				<a href="./fileDown?fileNum=${f.fileNum}">${f.oriName}</a>
 			</div>
 		</c:forEach>
 		<div>
-			<a href="./update?num=${productDetail.productNum}" type="button" class="col-1 btn btn-outline-primary">Update</a>
-			<a href="./delete?num=${productDetail.productNum}" type="button" class="col-1 btn btn-outline-danger">Delete</a>
+			<a href="./update?productNum=${vo.productNum}" type="button" class="col-1 btn btn-outline-primary">Update</a>
+			<a href="./delete?productNum=${vo.productNum}" type="button" class="col-1 btn btn-outline-danger">Delete</a>
 		</div>
 	</div>
 </body>

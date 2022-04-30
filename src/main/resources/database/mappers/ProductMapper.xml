@@ -11,7 +11,7 @@
 		<result column="productDetail" property="productDetail"/>
 		<result column="id" property="id"/>
 		<result column="sale" property="sale"/>
-		<collection property="productFilesVOs" javaType="java.util.List" ofType="ProductFilesVO">
+		<collection property="productFilesVOs" javaType="List" ofType="ProductFilesVO">
 			<id column="fileNum" property="fileNum"/>
 			<result column="productNum" property="productNum"/>
 			<result column="fileName" property="fileName"/>
@@ -41,18 +41,19 @@
 		</choose>
 		LIKE CONCAT('%', #{search},'%')
 		ORDER BY PRODUCTNUM DESC LIMIT #{startRow}, #{perPage}) P
-		LEFT OUTER JOIN
+		LEFT JOIN
 		PRODUCTFILES PF
 		ON P.PRODUCTNUM = PF.PRODUCTNUM
 		ORDER BY P.PRODUCTNUM DESC
 	</select>
 	
 	
-	<select id="totalCount" parameterType="Pager" resultType="java.lang.Long">
-		SELECT COUNT(PRODUCTNUM) FROM PRODUCT WHERE PRODUCTNUM > 0 AND
+	<select id="totalCount" parameterType="Pager" resultType="Long">
+		SELECT COUNT(PRODUCTNUM) FROM PRODUCT WHERE PRODUCTNUM > 0
 		<if test="id != null">
-			ID = #{id}
+			AND ID = #{id}
 		</if>
+		AND
 		<choose>
 			<when test="kind=='productName'">
 				PRODUCTNAME
@@ -72,10 +73,28 @@
 	</insert>
 	<select id="detail" parameterType="ProductVO" resultMap="listResult">
 		SELECT * FROM PRODUCT P
-		LEFT OUTER JOIN
+		LEFT JOIN
 		PRODUCTFILES PF
 		ON P.PRODUCTNUM = PF.PRODUCTNUM
 		WHERE P.PRODUCTNUM = #{productNum}
 	</select>
-	
+	<update id="update" parameterType="ProductVO">
+		UPDATE PRODUCT
+		SET
+			PRODUCTNAME = #{productName},
+			PRODUCTPRICE = #{productPrice},
+			PRODUCTCOUNT = #{productCount},
+			PRODUCTDETAIL = #{productDetail}
+		WHERE
+			PRODUCTNUM = #{productNum}
+	</update>
+	<delete id="fileDelete" parameterType="ProductFilesVO">
+		DELETE FROM PRODUCTFILES WHERE FILENUM = #{fileNum}
+	</delete>
+	<select id="fileDetail" parameterType="ProductFilesVO" resultType="ProductFilesVO">
+		SELECT * FROM PRODUCTFILES WHERE FILENUM = #{fileNum}
+	</select>
+	<delete id="delete" parameterType="ProductVO">
+		DELETE FROM PRODUCT WHERE PRODUCTNUM = #{productNum}
+	</delete>
 </mapper>

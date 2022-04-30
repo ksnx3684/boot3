@@ -12,34 +12,9 @@
 <body>
 
 	<div class="container mt-4">
-		<div class="row mt-4">
-			<div class="alert alert-primary" role="alert">
-			 	<c:choose>
-					<c:when test="${not empty auth}">
-						<a href="../member/mypage" type="button" class="col-1 btn btn-outline-primary">mypage</a>
-						<a href="../member/logout" type="button" class="col-1 btn btn-outline-primary">logout</a>
-					</c:when>
-					<c:otherwise>
-						<a href="../member/login" type="button" class="col-1 btn btn-outline-primary">login</a>
-						<a href="../member/join" type="button" class="col-1 btn btn-outline-primary">join</a>
-					</c:otherwise>
-				</c:choose>
-				<c:forEach items="${auth.roleVOs}" var="vo">
-					<c:if test="${vo.roleName eq 'ROLE_ADMIN'}">
-						<a href="../admin/manage" type="button" class="col-1 btn btn-outline-primary">ADMIN Manage</a>
-					</c:if>
-				</c:forEach>
-			</div>
-		</div>
-		<div class="row mt-4">
-			<div class="alert alert-primary" role="alert">
-			 <h4 style="text-transform: capitalize;">
-			 	<a href="../">index</a>
-			 	<a href="../board/list">Board List</a>
-			 	<a href="./list">Product List</a>
-			 </h4>
-			</div>
-		</div>
+	
+		<c:import url="../template/header.jsp"></c:import>
+	
 		<div class="d-flex justify-content-between">
 				<form action="./list" method="get" class="search-form" style="display: inline">
 					<select name="kind">
@@ -69,9 +44,9 @@
 		
 		<div class="items">
 			<ul>
-				<c:forEach items="${product}" var="vo">
+				<c:forEach items="${list}" var="vo">
 					<li class="each" style="list-style: none; float: left; margin-right:20px; margin-bottom:20px">
-						<div class="card">
+						<div class="card detail" data-num="${vo.productNum}">
 						 	<img src="../resources/upload/product/${vo.productFilesVOs[0].fileName}" class="card-img-top" style="width:250px; height:250px;">
 						 	<div class="card-body">
 								<h5 class="card-title"><a href="./detail?productNum=${vo.productNum}">${vo.productName}</a></h5>
@@ -86,5 +61,11 @@
 	</div>
 	
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<!-- <script type="text/javascript">
+	$(".detail").click(function(){
+		let num = $(this).attr("data-num");
+		location.href="./detail?productNum=" + num
+	});
+</script> -->
 </body>
 </html>

@@ -11,11 +11,9 @@
 </head>
 <body>
 	<div class="container mt-4">
-		<div class="row mt-4">
-			<div class="alert alert-primary" role="alert">
-				<a href="./list"><h4 style="text-transform: capitalize;">${board} List</h4></a>
-			</div>
-		</div>
+		
+		<c:import url="../template/header.jsp"></c:import>
+		
 		<input type="hidden" name="num" value="${detail.num}">
 		<h1>Detail Page</h1>
 		<h3>num : ${detail.num}</h3>

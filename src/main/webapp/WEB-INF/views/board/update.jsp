@@ -11,11 +11,9 @@
 </head>
 <body>
 	<div class="container mt-4">
-		<div class="row mt-4">
-			<div class="alert alert-primary" role="alert">
-				<a href="./list"><h4 style="text-transform: capitalize;">${board} List</h4></a>
-			</div>
-		</div>
+		
+		<c:import url="../template/header.jsp"></c:import>
+		
 		<form action="./update" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="num" value="${dto.num}">
 			<div class="mt-3 mb-3 row">

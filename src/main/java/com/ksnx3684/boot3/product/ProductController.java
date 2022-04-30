@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ksnx3684.boot3.member.MemberVO;
+import com.ksnx3684.boot3.util.FileManager;
 import com.ksnx3684.boot3.util.Pager;
 
 @Controller
@@ -35,9 +36,24 @@ public class ProductController {
 		ModelAndView mv = new ModelAndView();
 		
 		List<ProductVO> list = productService.list(pager);
-		mv.addObject("product", list);
+		mv.addObject("list", list);
 		mv.addObject("pager", pager);
 		mv.setViewName("product/list");
+		
+		return mv;
+	}
+	
+	@GetMapping("ajaxList")
+	public ModelAndView ajaxList(HttpSession session, Pager pager) throws Exception{
+		ModelAndView mv = new ModelAndView();
+		MemberVO memberVO = (MemberVO)session.getAttribute("auth");
+		pager.setId(memberVO.getId());
+		
+		List<ProductVO> list = productService.list(pager);
+		
+		mv.addObject("ajaxList", list);
+		mv.addObject("pager", pager);
+		mv.setViewName("product/ajaxList");
 		
 		return mv;
 	}
@@ -52,17 +68,11 @@ public class ProductController {
 	}
 	
 	@PostMapping("add")
-	public ModelAndView add(ProductVO productVO, MultipartFile[] files, HttpSession session, String sale) throws Exception{
+	public ModelAndView add(ProductVO productVO, MultipartFile[] files, HttpSession session) throws Exception{
 		ModelAndView mv = new ModelAndView();
 		
 		MemberVO memberVO = (MemberVO)session.getAttribute("auth");
 		productVO.setId(memberVO.getId());
-		productVO.setSale(Integer.parseInt(sale));
-		
-		for(MultipartFile f : files) {
-			System.out.println(f.getOriginalFilename());
-			System.out.println(f.getSize());
-		}
 		
 		int result = productService.add(productVO, files);
 		
@@ -79,37 +89,21 @@ public class ProductController {
 		
 		productVO = productService.detail(productVO);
 		
-		mv.addObject("productDetail", productVO);
+		mv.addObject("vo", productVO);
 		mv.setViewName("product/detail");
 		
 		return mv;
 	}
 	
-	@GetMapping("ajaxList")
-	public ModelAndView ajaxList(HttpSession session, Pager pager) throws Exception{
-		ModelAndView mv = new ModelAndView();
-		MemberVO memberVO = (MemberVO)session.getAttribute("auth");
-		pager.setId(memberVO.getId());
-		
-		List<ProductVO> list = productService.list(pager);
-		
-		mv.addObject("ajaxList", list);
-		mv.addObject("pager", pager);
-		mv.setViewName("common/productList");
-		
-		return mv;
-	}
 	
 	@GetMapping("manage")
 	public ModelAndView manage(HttpSession session, Pager pager) throws Exception{
 		ModelAndView mv = new ModelAndView();
-//		MemberVO memberVO = (MemberVO)session.getAttribute("auth");
-//		pager.setId(memberVO.getId());
-//		
-//		List<ProductVO> list = productService.list(pager);
-//		
-//		mv.addObject("product", list);
-//		mv.addObject("pager", pager);
+		MemberVO memberVO = (MemberVO)session.getAttribute("auth");
+		pager.setId(memberVO.getId());
+		List<ProductVO> list = productService.list(pager);
+		
+		System.out.println(list.get(0).getId());
 		mv.setViewName("product/manage");
 		return mv;
 	}
@@ -119,7 +113,63 @@ public class ProductController {
 	public ModelAndView manageDetail(ProductVO productVO) throws Exception{
 		// 판매자가 보는 페이지
 		ModelAndView mv = new ModelAndView();
+		
+		productVO = productService.detail(productVO);
+		
+		mv.addObject("vo", productVO);
 		mv.setViewName("product/manageDetail");
+		return mv;
+	}
+	
+	@GetMapping("update")
+	public ModelAndView update(ProductVO productVO) throws Exception{
+		ModelAndView mv = new ModelAndView();
+
+		productVO = productService.detail(productVO);
+		
+		mv.addObject("vo", productVO);
+		mv.setViewName("product/update");
+		
+		return mv;
+	}
+	
+	@PostMapping("update")
+	public ModelAndView update(ProductVO productVO, MultipartFile[] files) throws Exception{
+		ModelAndView mv = new ModelAndView();
+		
+		int result = productService.update(productVO, files);
+		
+		if(result > 0) {
+			mv.setViewName("redirect:../product/manage");
+		} else {
+			mv.addObject("message", "업데이트 실패");
+			mv.addObject("path", "./manageDetail?productNum="+productVO.getProductNum());
+			mv.setViewName("common/loginresult");
+		}
+		
+		return mv;
+	}
+	
+	@PostMapping("fileDelete")
+	public ModelAndView fileDelete(ProductFilesVO productFilesVO) throws Exception{
+		ModelAndView mv = new ModelAndView();
+		
+		int result = productService.fileDelete(productFilesVO);
+		
+		mv.setViewName("common/result");
+		mv.addObject("result", result);
+		
+		return mv;
+	}
+	
+	@GetMapping("delete")
+	public ModelAndView delete(ProductVO productVO) throws Exception{
+		ModelAndView mv = new ModelAndView();
+		
+		int result = productService.delete(productVO);
+		
+		mv.setViewName("redirect:../product/list");
+		
 		return mv;
 	}
 	

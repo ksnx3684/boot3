@@ -16,14 +16,11 @@
 </head>
 <body>
 	<div class="container mt-4">
-		<div class="row mt-4">
-			<div class="alert alert-primary" role="alert">
-				<a href="./list"><h4 style="text-transform: capitalize;">Product List</h4></a>
-			</div>
-		</div>
+		
+		<c:import url="../template/header.jsp"></c:import>
 		
 		<div class="row" id="list">
-			
+		<!-- ajax로 제품리스트 받아오는 구역 -->	
 		</div>
 		
 		<form action="./add" method="post" enctype="multipart/form-data" id="frm">
@@ -71,16 +68,21 @@
 				</div>
 				<button id="fileAdd" type="button" class="col-2 btn btn-outline-primary">File ADD</button>
 				<a href="./list" type="button" class="col-1 btn btn-outline-primary">List</a>
-				<button id="Add" type="button" class="col-1 btn btn-outline-primary">Add</button>
+				<button id="add" type="button" class="col-1 btn btn-outline-primary">Add</button>
 			</div>
 		</form>
 	</div>
 	
 </body>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script type="text/javascript" src="../resources/js/fileAdd.js"></script>
+<script type="text/javascript" src="../js/summernote.js"></script>
 <script type="text/javascript">
+	summernoteInit("productDetail", "");
+	fileAddInit(0);
+	fileDeleteInit();
 
-	let pn = 1;
+	// let pn = 1;
 	
 	$("#list").on("click", ".pager", function(){
 		let checkPn = $(this).attr("data-pn");
@@ -104,8 +106,9 @@
 				perPage : 5
 			},
 			success : function(data){
-				$("#list").append(data.trim());
+				$("#list").html(data.trim());
 			}
+			
 		});	
 	}
 
@@ -115,12 +118,13 @@
 	
 	
 	
-	$("#Add").click(function(){
+	$("#add").click(function(){
 		let formData = new FormData();
 		let productName = $("#productName").val();
 		let productPrice = $("#productPrice").val();
 		let productCount = $("#productCount").val();
 		let productDetail = $("#productDetail").summernote("code"); // $("#productDetail").val();
+		let sale = 0;
 		$(".sale").each(function(idx, item){
 			if($(item).prop("checked")){
 				sale = $(item).val();
@@ -177,22 +181,6 @@
 		});
 	});
 	
-	
-	let count = 1;
-	
-	$("#fileAdd").click(function(){
-		if(count < 6){
-			$("#fileResult").append('<div class="files"><input type="file" id="files" name="files"><button type="button" class="del">X</button></div>');
-			count++;
-		} else{
-			alert("5개 초과");
-		}
-	});
-	
-	$("#fileResult").on("click", ".del", function(){
-		$(this).parent().remove();
-		count--;
-	});
 	
 </script>
 </body>
