@@ -17,7 +17,7 @@ class MemberMapperTest {
 		MemberVO memberVO = new MemberVO();
 		
 		memberVO.setId("TEST");
-		memberVO.setPw(1L);
+		memberVO.setPw("1");
 		memberVO.setName("NAME");
 		memberVO.setEmail("EMAIL");
 		memberVO.setPhone("1111");
@@ -31,7 +31,7 @@ class MemberMapperTest {
 		MemberVO memberVO = new MemberVO();
 		
 		memberVO.setId("TEST");
-		memberVO.setPw(1L);
+		memberVO.setPw("1");
 		
 		memberVO = memberMapper.login(memberVO);
 		
