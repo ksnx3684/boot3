@@ -27,4 +27,10 @@ public interface MemberMapper {
 	
 	// withdrawal
 	public int withdrawal(MemberVO memberVO) throws Exception;
+	
+	// findId
+	public MemberVO findId(MemberVO memberVO) throws Exception;
+	
+	// checkId
+	public int checkId(MemberVO memberVO) throws Exception;
 }

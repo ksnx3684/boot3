@@ -2,11 +2,15 @@ package com.ksnx3684.boot3.member;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,7 +25,7 @@ public class MemberController {
 	
 	// join form
 	@GetMapping("join")
-	public ModelAndView join() throws Exception{
+	public ModelAndView join(@ModelAttribute MemberVO memberVO) throws Exception{
 		ModelAndView mv = new ModelAndView();
 		
 		mv.setViewName("member/join");
@@ -31,7 +35,17 @@ public class MemberController {
 	
 	// join 기능
 	@PostMapping("join")
-	public String join(MemberVO memberVO, MultipartFile multipartFile) throws Exception{
+	public String join(@Valid MemberVO memberVO, BindingResult bindingResult, MultipartFile multipartFile) throws Exception{
+		
+//		if(bindingResult.hasErrors()) {
+//			return "member/join";
+//		}
+		
+		// 사용자 정의 검증 메서드 호출
+		if(memberService.memberError(memberVO, bindingResult)) {
+			return "member/join";
+		}
+		
 		int result = memberService.join(memberVO, multipartFile);
 		
 		return "redirect:../board/list";
@@ -39,9 +53,9 @@ public class MemberController {
 	
 	// login form
 	@GetMapping("login")
-	public ModelAndView login() throws Exception{
+	public ModelAndView login(@ModelAttribute MemberVO memberVO) throws Exception{
 		ModelAndView mv = new ModelAndView();
-		
+//		mv.addObject("vo", new MemberVO());
 		mv.setViewName("member/login");
 		
 		return mv;
@@ -49,7 +63,11 @@ public class MemberController {
 	
 	// login 기능
 	@PostMapping("login")
-	public String login(Model model, MemberVO memberVO, HttpSession httpSession, HttpServletResponse httpServletResponse) throws Exception{
+	public String login(MemberVO memberVO, Model model, HttpSession httpSession, HttpServletResponse httpServletResponse) throws Exception{
+		
+//		if(bindingResult.hasErrors()) {
+//			return "member/login";
+//		}
 		
 		memberVO = memberService.login(memberVO);
 		
@@ -130,6 +148,24 @@ public class MemberController {
 		httpSession.invalidate();
 		
 		return "redirect:../";
+	}
+	
+	@GetMapping("findId")
+	public ModelAndView findId() throws Exception{
+		ModelAndView mv = new ModelAndView();
+		
+		mv.setViewName("member/findId");
+		return mv;
+	}
+	
+	@PostMapping("findId")
+	public ModelAndView findId(MemberVO memberVO) throws Exception{
+		ModelAndView mv = new ModelAndView();
+		
+		memberVO = memberService.findId(memberVO);
+		mv.addObject("find", memberVO);
+		mv.setViewName("member/findIdResult");
+		return mv;
 	}
 	
 

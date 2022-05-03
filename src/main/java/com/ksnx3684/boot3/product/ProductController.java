@@ -4,10 +4,12 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -59,7 +61,7 @@ public class ProductController {
 	}
 	
 	@GetMapping("add")
-	public ModelAndView add() throws Exception{
+	public ModelAndView add(@ModelAttribute ProductVO productVO) throws Exception{
 		ModelAndView mv = new ModelAndView();
 		
 		mv.setViewName("product/add");
@@ -68,16 +70,22 @@ public class ProductController {
 	}
 	
 	@PostMapping("add")
-	public ModelAndView add(ProductVO productVO, MultipartFile[] files, HttpSession session) throws Exception{
+	public ModelAndView add(@Valid ProductVO productVO, BindingResult bindingResult, MultipartFile[] files, HttpSession session) throws Exception{
 		ModelAndView mv = new ModelAndView();
+		
+		if(bindingResult.hasErrors()) {
+			mv.setViewName("product/add");
+			return mv;
+		}
 		
 		MemberVO memberVO = (MemberVO)session.getAttribute("auth");
 		productVO.setId(memberVO.getId());
 		
 		int result = productService.add(productVO, files);
 		
-		mv.addObject("result", result);
-		mv.setViewName("common/result");
+//		mv.addObject("result", result);
+//		mv.setViewName("common/result");
+		mv.setViewName("product/list");
 		
 		return mv;
 	}
@@ -103,7 +111,7 @@ public class ProductController {
 		pager.setId(memberVO.getId());
 		List<ProductVO> list = productService.list(pager);
 		
-		System.out.println(list.get(0).getId());
+//		System.out.println(list.get(0).getId());
 		mv.setViewName("product/manage");
 		return mv;
 	}

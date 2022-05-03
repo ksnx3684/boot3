@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
 import com.ksnx3684.boot3.interceptor.AdminInterceptor;
 import com.ksnx3684.boot3.interceptor.BoardInterceptor;
@@ -24,6 +25,9 @@ public class InterceptorConfig implements WebMvcConfigurer{
 
 	@Autowired
 	private WriterCheckInterceptor writerCheckInterceptor;
+	
+	@Autowired
+	private LocaleChangeInterceptor localeChangeInterceptor;
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
@@ -47,6 +51,10 @@ public class InterceptorConfig implements WebMvcConfigurer{
 		registry.addInterceptor(writerCheckInterceptor)
 				.addPathPatterns("/board/update")
 				.addPathPatterns("/board/delete");
+		
+		// localeChangeInterceptor
+		registry.addInterceptor(localeChangeInterceptor)
+				.addPathPatterns("/**");
 		
 	}
 	

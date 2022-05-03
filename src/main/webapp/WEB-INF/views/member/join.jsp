@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +15,8 @@
 		
 		<c:import url="../template/header.jsp"></c:import>
 		
-		<form action="./join" method="post" enctype="multipart/form-data">
+		<!-- <form action="./join" method="post" enctype="multipart/form-data"> -->
+		<form:form modelAttribute="memberVO" method="post" enctype="multipart/form-data">
 			<div class="main">
 				<div class="form-check">
 					<input class="form-check-input checkAll" type="checkbox" id="checkAll" value="1">
@@ -43,23 +45,46 @@
 			
 				<div>
 					<label>아이디</label>
-					<input type="id" name="id" placeholder="id">
+					<form:input path="id" cssClass="form-control" id="id" placeholder="id"/>
+					<div>
+						<form:errors path="id"></form:errors>
+						<form:errors path="checkId"></form:errors>
+					</div>
 				</div>
 				<div>
 					<label>비밀번호</label>
-					<input type="password" name="pw" placeholder="pw">
+					<form:password path="pw" cssClass="form-control" id="pw" placeholder="pw"/>
+					<div>
+						<form:errors path="pw"></form:errors>
+					</div>
+				</div>
+				<div>
+					<label>비밀번호 확인</label>
+					<form:password path="checkPw" cssClass="form-control" id="checkPw" placeholder="checkPw"/>
+					<div>
+						<form:errors path="checkPw"></form:errors>
+					</div>
 				</div>
 				<div>
 					<label>이름</label>
-					<input type="text" name="name" placeholder="이름">
+					<form:input path="name" cssClass="form-control" id="name" placeholder="이름"/>
+					<div>
+						<form:errors path="name"></form:errors>
+					</div>
 				</div>
 				<div>
 					<label>이메일</label>
-					<input type="text" name="email" placeholder="이메일">
+					<form:input path="email" cssClass="form-control" id="email" placeholder="이메일"/>
+					<div>
+						<form:errors path="email"></form:errors>
+					</div>
 				</div>
 				<div>
 					<label>전화번호</label>
-					<input type="text" name="phone" placeholder="전화번호">
+					<form:input path="phone" cssClass="form-control" id="phone" placeholder="전화번호"/>
+					<div>
+						<form:errors path="phone"></form:errors>
+					</div>
 				</div>
 				<div>
 					<label>프로필사진</label>
@@ -69,7 +94,7 @@
 					<button type="submit" class="btn btn-outline-success">가입</button>
 				</div>
 			</div>
-		</form>
+		</form:form>
 	</div>
 
 </body>

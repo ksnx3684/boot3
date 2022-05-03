@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,43 +24,59 @@
 		<!-- ajax로 제품리스트 받아오는 구역 -->	
 		</div>
 		
-		<form action="./add" method="post" enctype="multipart/form-data" id="frm">
+		<!-- <form action="./add" method="post" enctype="multipart/form-data" id="frm"> -->
+		<form:form modelAttribute="productVO" method="post" enctype="multipart/form-data">
 			<div class="mt-3 mb-3 row">
 				<label class="col-sm-2 col-form-label">제품명</label>
 				<div class="col-sm-3">
-					<input type="text" class="form-control" id="productName" name="productName">
+					<form:input path="productName" cssClass="form-control" id="productName" name="productName"/>
+				</div>
+				<div>
+					<form:errors path="productName"></form:errors>
 				</div>
 			</div>
 			<div class="mt-3 mb-3 row">
 				<label class="col-sm-2 col-form-label">가격</label>
 				<div class="col-sm-3">
-					<input type="text" class="form-control" id="productPrice" name="productPrice">
+					<form:input path="productPrice" cssClass="form-control" id="productPrice" name="productPrice"/>
+				</div>
+				<div>
+					<form:errors path="productPrice"></form:errors>
 				</div>
 			</div>
 			<div class="mb-3 row">
 				<label class="col-sm-2 col-form-label">수량</label>
 				<div class="col-sm-3">
-					<input type="text" class="form-control" id="productCount" name="productCount"></input>
+					<form:input path="productCount" cssClass="form-control" id="productCount" name="productCount"/>
+				</div>
+				<div>
+					<form:errors path="productCount"></form:errors>
 				</div>
 			</div>
 			<div class="mb-3 row">
 				<label class="col-sm-2 col-form-label">상세설명</label>
 				<div class="col-sm-10">
-					<textarea class="form-control" id="productDetail" name="productDetail" rows="5"></textarea>
+					<form:textarea path="productDetail" cssClass="form-control" id="productDetail" name="productDetail" rows="5"/>
+				</div>
+				<div>
+					<form:errors path="productDetail"></form:errors>
 				</div>
 			</div>
 			<div class="mb-3 row">
 				<div class="form-check">
-				  <input class="form-check-input sale" type="radio" value="1" name="sale" id="flexCheckDefault">
+				  <form:radiobutton path="sale" cssClass="form-check-input sale" value="1" name="sale" id="sale"/>
 				  <label class="form-check-label" for="flexCheckDefault">
 				    판매
 				  </label>
 				</div>
 				<div class="form-check">
-				  <input class="form-check-input sale" type="radio" value="0" name="sale" id="flexCheckDefault" checked>
+				  <form:radiobutton path="sale" cssClass="form-check-input sale" value="0" name="sale" id="sale"/>
 				  <label class="form-check-label" for="flexCheckDefault">
 				    판매중지
 				  </label>
+				</div>
+				<div>
+					<form:errors path="sale"></form:errors>
 				</div>
 			</div>
 			<div>
@@ -68,9 +85,9 @@
 				</div>
 				<button id="fileAdd" type="button" class="col-2 btn btn-outline-primary">File ADD</button>
 				<a href="./list" type="button" class="col-1 btn btn-outline-primary">List</a>
-				<button id="add" type="button" class="col-1 btn btn-outline-primary">Add</button>
+				<button id="add2" type="submit" class="col-1 btn btn-outline-primary">Add</button>
 			</div>
-		</form>
+		</form:form>
 	</div>
 	
 </body>

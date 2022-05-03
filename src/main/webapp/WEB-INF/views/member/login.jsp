@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,21 +21,33 @@
 			 </h4>
 			</div>
 		</div>
-		<form action="./login" method="post">
+		<!-- HTML Form tag 대신 Spring tag 사용 -->
+		<form:form modelAttribute="memberVO" method="post">
 			<div class="main">
 				<div>
 					<label>아이디</label>
-					<input type="id" name="id" placeholder="id">
+					<!-- <input type="id" name="id" class="form-control" placeholder="id"> -->
+					<form:input path="id" cssClass="form-control" id="id"/>
+					<div>
+						<form:errors path="id"></form:errors>
+					</div>
 				</div>
 				<div>
 					<label>비밀번호</label>
-					<input type="password" name="pw" placeholder="pw">
+					<!-- <input type="password" name="pw" class="form-control" placeholder="pw"> -->
+					<form:password path="pw" cssClass="form-control" id="pw"/>
+					<div>
+						<form:errors path="pw" cssStyle="color:red;"></form:errors>
+					</div>
 				</div>
 				<div>
 					<button type="submit" class="btn btn-outline-success">로그인</button>
 				</div>
+				<div>
+					<a href="./findId"><button type="button" class="btn btn-danger">ID찾기</button></a>
+				</div>
 			</div>
-		</form>
+		</form:form>
 	</div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

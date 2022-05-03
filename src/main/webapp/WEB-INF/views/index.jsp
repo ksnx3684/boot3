@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,8 +41,18 @@
 			<button id="btn3">AJAX</button>
 		</div>
 		
+		
 		<div class="container">
+			<h1>Spring Message</h1>
+			<h1><spring:message code="hello" var="m"></spring:message></h1>
+			<h1><spring:message code="test" text="기본메세지"></spring:message></h1>
+			<h1>${m}</h1>
+			<h2>${m}</h2>
+			<h1><spring:message code="board.title"></spring:message></h1>
+			<hr>
+			
 			<c:if test="${not empty auth}">
+				<h1><spring:message code="member.login.info" arguments="${auth.id}"></spring:message></h1>
 				<c:forEach items="${auth.roleVOs}" var="vo">
 					<h3>${vo.roleName}</h3>
 				</c:forEach>
