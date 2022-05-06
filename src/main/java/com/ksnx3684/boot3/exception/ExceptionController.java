@@ -24,18 +24,17 @@ public class ExceptionController {
 		return mv;
 	}
 	@ExceptionHandler(Exception.class)
-	public ModelAndView ex3() {
+	public ModelAndView ex3(Exception e) {
 		ModelAndView mv = new ModelAndView();
-		System.out.println("포괄적인 예외 발생 처리");
+		System.out.println("Exception 예외 발생 처리");
 		mv.setViewName("error/error");
+		e.printStackTrace();
 		return mv;
 	}
 	@ExceptionHandler(Throwable.class)
-	public ModelAndView ex4(Exception e) {
+	public ModelAndView ex4() {
 		ModelAndView mv = new ModelAndView();
-		System.out.println("최상위 예외 발생 처리");
-		System.out.println(e.getMessage());
-		e.printStackTrace();
+		System.out.println("Throwable 예외 발생 처리");
 		mv.setViewName("error/error");
 		return mv;
 	}

@@ -8,6 +8,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 	<title>Mypage</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
 	<div class="container mt-4">
@@ -23,7 +24,18 @@
 		<h1>전화번호 : ${mypage.phone}</h1>
 		<a href="../member/mypageUpdate" type="button" class="col-2 btn btn-outline-primary">개인정보 수정</a>
 		<a href="../member/withdrawal" type="button" class="col-2 btn btn-outline-primary">회원탈퇴</a>
+		
+		<div class="container">
+			<div class="row">
+				<button type="button" id="delBtn">Delete</button>
+			</div>
+		</div>
+		
 	</div>
 
 </body>
+<script type="text/javascript" src="../resources/js/cart.js"></script>
+<script type="text/javascript">
+	cartlist();
+</script>
 </html>
